@@ -34,23 +34,24 @@
     </div>
   </div>
 </nav>
-<h2>Edit Data Mahasiswa</h2> <div class="container">
-<form action="/update" method="POST">
-    @csrf @method("PUT") <div class="row">
-    @foreach ($buku as $bk)
+<h3>Edit Data Buku</h3> <div class="container">
+<form action="{{ url('Tampil/' . $buku->id) }}" method="POST">
+    @csrf 
+    <input type="hidden" name="_method" value="patch">
+    <div class="row">
     <div class="col-25"> <label>Judul</label></div>
     <div class="col-75">
-    <input type="text" name="judul" value="{{$bk->judul}}"></div>
+    <input type="text" name="judul" value="{{$buku->judul}}"></div>
     </div>
     <div class="row">
     <div class="col-25"> <label>Tahun Terbit</label> </div>
     <div class="col-75">
-    <input type="number" name="tahun_terbit" value="{{$bk->tahun_terbit}}"> </div>
+    <input type="number" name="tahun_terbit" value="{{$buku->tahun_terbit}}"> </div>
     </div>
     <div class="row">
     <input type="submit" value="Submit"> </div>
     </form> </div>
-    @endforeach
+   
 
     <!-- Optional JavaScript; choose one of the two! -->
 

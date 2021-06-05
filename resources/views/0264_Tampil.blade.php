@@ -34,6 +34,19 @@
     </div>
   </div>
 </nav>
+<form action="/Tampil" method="GET">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">@</span>
+                            </div>
+                            <input type="text" class="form-control" value="{{ request()->get('query') }}"
+                                placeholder="Ketik Pencarian" aria-label="Username" aria-describedby="basic-addon1"
+                                name="query">
+                        </div>
+                        <div class="input-group mb-3">
+                            <button class="btn btn-success" type="submit">FILTER CUY</button>
+                        </div>
+                    </form>
 <a href="/Tambah">Tambah Data</a> 
               <table>
             <thead>
@@ -53,11 +66,12 @@
                     <td>{{$bk->tahun_terbit}}</td>
                     
                     <td>  
-                      <a href="/Edit/{{$bk->id}}">Edit </a> |
-                      <form action="{{ url ('0264_Tampil/'.$bk->id)}}" method="post"></form>
-                      @csrf
-                      <input type="hidden" name="_method" value="delete">
-                      <button type="submit">Delete</button>
+                      <a href="{{ url('Tampil/' . $bk->id . '/edit') }}">Edit </a> |
+                      <form action="{{ url('Tampil/' . $bk->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="_method" value="delete">
+                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                        </form>
                     </td> 
                 </tr>
                 @endforeach

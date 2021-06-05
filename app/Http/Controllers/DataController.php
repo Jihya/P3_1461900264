@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Data as ModelsData;
+use Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,10 +16,14 @@ class DataController extends Controller
      */
     public function index()
     {
-        $buku = DB::table('buku')
-            ->select('*')
-            ->get();
-            return view('0264_Tampil' , ['buku' => $buku]);      
+        $buku = \App\Models\Data::select('*');
+        if (request()->has('query')) {
+            $q = request()->get('query');
+            $buku->where('judul', 'LIKE', '%' . $q . '%')
+                ->orWhere('tahun_terbit', 'LIKE', '%' . $q . '%');
+        }
+        $buku = $buku->orderBy('judul', 'ASC')->get();
+        return view('0264_Tampil')->with('buku', $buku);
     }
 
     /**
@@ -68,8 +74,8 @@ class DataController extends Controller
      */
     public function edit($id)
     {
-        $bk_edit = \App\Models\Data::findOrFail($id); 
-        return view('/0264_Edit', ['buku' => $bk_edit]);
+        $buku = \App\Models\Data::find($id);
+        return view('0264_Edit', ['buku' => $buku]);
     }
 
     /**
@@ -81,10 +87,10 @@ class DataController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $bk = \App\Models\Data::findOrFail($id); 
-        $bk->judul = $request->get('judul'); 
-        $bk->tahun_terbit = $request->get('tahun_terbit'); 
-        $bk->save();
+        $buku = \App\Models\Data::find($id);
+        $buku->judul = $request->judul;
+        $buku->tahun_terbit = $request->tahun_terbit;
+        $buku->save();
         return redirect('Tampil');
     }
 
@@ -96,8 +102,8 @@ class DataController extends Controller
      */
     public function destroy($id)
     {
-        $bk = \App\Models\Data::findOrFail($id); 
-        $bk->delete();
+        $buku = \App\Models\Data::find($id);
+        $buku->delete();
         return redirect('Tampil');
     }
 }

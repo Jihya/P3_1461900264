@@ -16,10 +16,6 @@ class DataSeeder extends Seeder
      */
     public function run()
     {
-        $sws = new Data;
-        $sws ->ni = "1461800"; 
-        $sws->nama = "Ade Prasetyo"; 
-        $sws->id_kelas = "2"; 
-        $sws->save(); 
+        protected $table = "Buku";
     }
 }
